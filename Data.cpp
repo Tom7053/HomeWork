@@ -1,35 +1,38 @@
-//
-// Created by tomma on 10/12/2025.
-//
-
 #include "Data.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
 
+// Utilisation des noms des attributs de classe
 void Data::load(const std::string& filename) {
     std::ifstream file(filename);
     if (!file) {
-        std::cerr << "Erreur : impossible d'ouvrir " << filename << std::endl;
-        return;
+        std::cerr << "Erreur : impossible d'ouvrir le fichier " << filename << std::endl;
+        return; 
     }
 
-    int nb_samples, nb_features;
-    file >> nb_samples >> nb_features;
 
-    samples.clear();
-    samples.reserve(nb_samples);
+    // Lecture des 2 premières lignes
+    file >> _nb_samples >> _nb_features; 
 
-    for (int i = 0; i < nb_samples; ++i) {
+    _data.clear();
+    _data.reserve(_nb_samples);
+
+    for (int i = 0; i < _nb_samples; ++i) { // Lecture du fichier
         int label;
-        file >> label;
+        if (!(file >> label)) return; // Gestion de l'erreur
+        std::vector<double> features_vec(_nb_features); 
+        for (int j = 0; j < _nb_features; ++j) {
+            if (!(file >> features_vec[j])) return;
+        }
 
-        std::vector<double> features(nb_features);
-        for (int j = 0; j < nb_features; ++j)
-            file >> features[j];
+        // Création le FeatureVector
+        FeatureVector fv(features_vec); 
 
-        samples.push_back({label, features});
+        // Création du Sample
+        Sample s(fv, label);
+
+        _data.push_back(s);
     }
 }
-

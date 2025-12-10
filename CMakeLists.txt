@@ -6,4 +6,8 @@ set(CMAKE_CXX_STANDARD 20)
 add_executable(Project main.cpp
         Data.cpp
         Data.h
+        Sample.cpp
+        Sample.h
+        FeatureVector.cpp
+        FeatureVector.h
 )
