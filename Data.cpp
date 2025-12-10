@@ -26,8 +26,7 @@ void Data::load(const std::string& filename) {
         for (int j = 0; j < _nb_features; ++j) {
             if (!(file >> features_vec[j])) return;
         }
-
-        // Création le FeatureVector
+        // Création d'un FeatureVector
         FeatureVector fv(features_vec); 
 
         // Création du Sample

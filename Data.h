@@ -12,9 +12,9 @@
 
 class Data {
 private:
-    int _nb_features = 0;   // Nombre de caractéristiques
-    int _nb_samples = 0;    // Nombre d'exemples
-    std::vector<Sample> _data; 
+    int _nb_features;   // Nombre de caractéristiques
+    int _nb_samples;    // Nombre d'exemples
+    std::vector<Sample> _data;
 public:
     void load(const std::string& filename);
 };
