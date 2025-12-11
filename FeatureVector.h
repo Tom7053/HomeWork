@@ -13,9 +13,7 @@ private:
 
 public:
     FeatureVector(const std::vector<double>& features)
-        : _vector(features)
-    {}
-
+        : _vector(features) {}   // Constructeur
 };
 
 

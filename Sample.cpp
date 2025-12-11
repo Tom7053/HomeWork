@@ -3,3 +3,10 @@
 //
 
 #include "Sample.h"
+
+int Sample::tag() const {
+    { return _tag; }
+}
+const FeatureVector& Sample::features() const {
+    return _fv;
+}

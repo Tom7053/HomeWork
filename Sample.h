@@ -9,10 +9,15 @@
 
 class Sample {
 private:
-    FeatureVector _features;
+    FeatureVector _fv;
     int _tag;
+
 public:
-    Sample(FeatureVector& fv, int tag);
+    Sample(const FeatureVector& fv, int label)
+        : _fv(fv), _tag(label) {}    // Constructeur
+
+    const FeatureVector& features() const;
+    int tag() const;
 };
 
 
