@@ -34,7 +34,7 @@ void Data::load(const std::string& filename) {
         FeatureVector fv(features_vec); 
 
         // Création du Sample
-        Sample s(fv, label);   //  Sample = FeatureVector (70 valeurs) + Label(1...9)
+        Sample s(fv, label);   //  Sample = FeatureVector (70 valeurs) + Label(0...9)
 
         this->add(s);
     }

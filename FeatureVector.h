@@ -14,6 +14,12 @@ private:
 public:
     FeatureVector(const std::vector<double>& features)
         : _vector(features) {}   // Constructeur
+    int size() const;
+
+    double norme() const;
+
+    double operator*(const FeatureVector& b) const; // Produit scalaire entre 2 vecteurs
+
 };
 
 
