@@ -7,6 +7,9 @@
 #include "FeatureVector.h"
 
 
+// Sample hérite de FeatureVector ?	❌ Non
+// Sample contient un FeatureVector ? ✅ Oui
+
 class Sample {
 private:
     FeatureVector _fv;
@@ -18,6 +21,8 @@ public:
 
     const FeatureVector& features() const;
     int tag() const;
+    double operator[](int i) const;
+
 };
 
 

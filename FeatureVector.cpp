@@ -10,11 +10,12 @@ int FeatureVector::size() const {
     return _vector.size();
 }
 
-double FeatureVector::norme() const {
+double FeatureVector::norme() {     // norme
     double sum = 0.0;
     for (auto x : _vector) {
         sum += x * x;
     }
+    _norme = sqrt(sum);
     return std::sqrt(sum);
 }
 
@@ -23,4 +24,8 @@ double FeatureVector::operator*(const FeatureVector &b) const {    // Produit sc
         for (int i = 0; i < size(); ++i)
             sum += this->_vector[i] * b[i];
         return sum;
+}
+
+double FeatureVector::operator[](int i) const {
+    return _vector[i];
 }

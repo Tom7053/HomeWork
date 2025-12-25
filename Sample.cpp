@@ -10,3 +10,7 @@ int Sample::tag() const {
 const FeatureVector& Sample::features() const {
     return _fv;
 }
+
+double Sample::operator[](int i) const {
+        return _fv[i];
+}
