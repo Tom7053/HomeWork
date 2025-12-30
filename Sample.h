@@ -4,11 +4,13 @@
 
 #ifndef SAMPLE_H
 #define SAMPLE_H
+#include <string>
+
 #include "FeatureVector.h"
 
 
-// Sample hérite de FeatureVector ?	❌ Non
-// Sample contient un FeatureVector ? ✅ Oui
+// Sample n'hérite pas de FeatureVector
+// Sample contient un FeatureVector
 
 class Sample {
 private:
@@ -22,6 +24,9 @@ public:
     const FeatureVector& features() const;
     int tag() const;
     double operator[](int i) const;
+
+    std::string toString() const;      // affichage du Sample
+    Sample scale(double multiplicateur) const; // nouveau Sample multiplié
 
 };
 

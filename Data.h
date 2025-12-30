@@ -20,7 +20,7 @@ public:
     void load(const std::string& filename);
     int nbSamples() const;
     void add(const Sample& s);
-    const Sample& operator[](int i) const; // acces à data [i] --> Sample
+    const Sample& operator[](int i) const; // Acces à data [i] --> Sample
 };
 
 #endif //DATA_H

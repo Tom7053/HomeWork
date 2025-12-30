@@ -31,11 +31,9 @@ void Data::load(const std::string& filename) {
             if (!(file >> features_vec[j])) return;  // Lecture des features
         }
         // Création d'un FeatureVector
-        FeatureVector fv(features_vec); 
-
+        FeatureVector fv(features_vec);
         // Création du Sample
         Sample s(fv, label);   //  Sample = FeatureVector (70 valeurs) + Label(0...9)
-
         this->add(s);
     }
 }

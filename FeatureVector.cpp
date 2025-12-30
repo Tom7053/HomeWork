@@ -10,7 +10,7 @@ int FeatureVector::size() const {
     return _vector.size();
 }
 
-double FeatureVector::norme() {     // norme
+double FeatureVector::norme() {
     double sum = 0.0;
     for (auto x : _vector) {
         sum += x * x;
