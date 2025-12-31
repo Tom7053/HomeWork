@@ -3,7 +3,7 @@
 
 int main() {
     Data data;
-    data.load("C:\\Users\\tomma\\Documents\\TP_POO\\Project\\Donnees");
+    data.load("digits.svm");  // ../cmake-build-debug
 
     // Test
     if (data.nbSamples() > 0) {
@@ -11,6 +11,8 @@ int main() {
 
         // Affichage
         std::cout << s.toString() << std::endl;
+
+        std::cout << "Multiplie par 2 :" << std::endl;
 
         // Mise à l'échelle
         Sample s_scaled = s.scale(2);  // Multiplie par 2
