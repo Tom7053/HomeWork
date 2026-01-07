@@ -10,4 +10,8 @@ add_executable(Project main.cpp
         Sample.h
         FeatureVector.cpp
         FeatureVector.h
+        Knn.cpp
+        Knn.h
+        KnnCosine.cpp
+        KnnCosine.h
 )
