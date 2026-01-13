@@ -1,11 +1,6 @@
-//
-// Created by tomma on 10/12/2025.
-//
-
 #ifndef FEATUREVECTOR_H
 #define FEATUREVECTOR_H
 #include <vector>
-
 
 class FeatureVector {
 private:
@@ -13,18 +8,14 @@ private:
     double _norme;
 
 public:
-    FeatureVector(const std::vector<double>& features)
-        : _vector(features),_norme(0){}   // Constructeur
+    FeatureVector(const std::vector<double>& features);
+
     int size() const;
 
-    double norme();
+    double norme() const; 
 
-    double operator*(const FeatureVector& b) const; // Produit scalaire entre 2 vecteurs
-
+    double operator*(const FeatureVector& b) const; 
     double operator[](int i) const;
-
 };
-
-
 
 #endif //FEATUREVECTOR_H
