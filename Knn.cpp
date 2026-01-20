@@ -1,32 +1,53 @@
-//
-// Created by tomma on 07/01/2026.
-//
-
 #include "Knn.h"
-
 #include <algorithm>
-#include <cmath>
-Knn::Knn() : _k(0) {}  // Initialise k à 0 par défaut
+#include <vector>
+#include <map>
 
-int Knn::getKnn(const Sample& s) const {
-    // Vecteur des distances entre sample `s` et chaque exemple (résultats de similarity)
-    std::vector<std::pair<double, int>> distances;
+Knn::Knn(int k) : _k(k) {}
 
-    for (int i = 0; i < _lazy_train.nbSamples(); ++i) {
-        double dist = similarity(s, _lazy_train[i]);
-        distances.push_back(std::make_pair(dist, _lazy_train[i].tag())); // Vecteur = distance + tag
-    }
-
-    std::sort(distances.begin(), distances.end()); // trier +petite à +grande distance
+void Knn::train(const Data& data) {
+    _lazy_train = data;
 }
 
-double Knn::similarity(const Sample& sample1, const Sample& sample2) const {
-    double distance = 0.0;
-    // Pour chaque "feature" distance = √((x₁-x₂)² + (y₁-y₂)² + ...)
-    for (int i = 0; i < sample1.features().size(); ++i) {
-        double diff = sample1[i] - sample2[i];
-        distance = distance + diff * diff;
+int Knn::predict(const Sample& s) const {
+    // 1. Calcul des distances avec tous les points d'apprentissage
+    // On stocke des paires <Distance/Similarité, Étiquette>
+    std::vector<std::pair<double, int>> neighbors;
+
+    for (int i = 0; i < _lazy_train.nbSamples(); ++i) {
+        // On appelle la méthode virtuelle similarity
+        // Note: selon ta formule, plus c'est petit, plus c'est proche (Distance)
+        // Si tu utilises Cosine plus tard, plus c'est grand, plus c'est proche (Similarité)
+        double score = similarity(s, _lazy_train[i]);
+        neighbors.push_back(std::make_pair(score, _lazy_train[i].tag()));
     }
-    
-    return std::sqrt(distance);
+
+    // 2. Tri (Plus petite distance en premier)
+    // Attention : Si tu utilises Cosine (similarité), il faudra inverser le tri !
+    std::sort(neighbors.begin(), neighbors.end());
+
+    // 3. Le Vote parmi les k premiers
+    // On utilise un tableau de taille 10 (pour les chiffres 0-9) pour compter les votes
+    std::vector<int> votes(10, 0);
+
+    // On regarde seulement les k premiers voisins
+    int limit = std::min(_k, (int)neighbors.size()); // Sécurité si k > nb_samples
+
+    for (int i = 0; i < limit; ++i) {
+        int label = neighbors[i].second; // Récupère l'étiquette du voisin
+        votes[label]++;                  // Ajoute un vote pour ce chiffre
+    }
+
+    // 4. Trouver le gagnant (l'indice avec le max de votes)
+    int max_votes = -1;
+    int winner_label = -1;
+
+    for (int label = 0; label < 10; ++label) {
+        if (votes[label] > max_votes) {
+            max_votes = votes[label];
+            winner_label = label;
+        }
+    }
+
+    return winner_label;
 }

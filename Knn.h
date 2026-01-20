@@ -2,25 +2,23 @@
 #define KNN_H
 #include "Data.h"
 
-
-
 class Knn {
-private:
-    int _k;
 protected:
+    int _k;
     Data _lazy_train;  // Données d'entraînement
-    
-    // Obtenir les k plus proches voisins
-    int getKnn(const Sample& s) const;
 
-    int predictSingle(const Sample& s) const;
-
-    double similarity(const Sample& s1, const Sample& s2) const; // distance point à point entre 2 samples --> + distance faible == Samples identiques
+    // 1. Virtuelle Pure : Knn ne sait pas calculer la sim, c'est le boulot des enfants
+    virtual double similarity(const Sample& s1, const Sample& s2) const = 0;
 
 public:
-    // Constructeur
-    Knn();
+    // On force l'utilisateur à donner k dès le début
+    Knn(int k);
+    virtual ~Knn() {} // Destructeur virtuel important pour l'héritage
 
+    // 2. Méthode pour charger les données (indispensable)
+    void train(const Data& data);
+
+    // Prédit l'étiquette pour un seul exemple (contient la logique de vote)
     int predict(const Sample& s) const;
 };
 

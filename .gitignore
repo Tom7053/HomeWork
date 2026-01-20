@@ -1,0 +1,20 @@
+# Fichiers de build CLion et CMake
+cmake-build-debug/
+cmake-build-release/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+
+# Fichiers de configuration IDE (Optionnel, souvent mieux de ne pas les push)
+.idea/
+
+# Exécutables et binaires
+*.exe
+*.o
+*.dll
+*.so
+*.dylib
+
+# Fichiers de données (s'ils sont lourds, sinon tu peux les enlever de cette liste)
+*.svm
+*.txt

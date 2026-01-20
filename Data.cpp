@@ -14,33 +14,54 @@ void Data::load(const std::string& filename) {
     std::ifstream file(filename);
     if (!file) {
         std::cerr << "Erreur : impossible d'ouvrir le fichier " << filename << std::endl;
-        return; 
+        return;
     }
 
+    int nb_to_read = 0; // Variable temporaire pour la boucle
+    int nb_feat = 0;    // Variable temporaire pour les features
+
     // Lecture des 2 premières lignes
-    file >> _nb_samples >> _nb_features; 
+    file >> nb_to_read >> nb_feat;
 
+    // On prépare le stockage
     _data.clear();
-    _data.reserve(_nb_samples);
+    _data.reserve(nb_to_read);
 
-    for (int i = 0; i < _nb_samples; ++i) { // Lecture du fichier
+    // On met à jour les attributs de la classe
+    _nb_samples = 0; // On repart à 0 et on laissera add() incrémenter
+    _nb_features = nb_feat;
+
+    for (int i = 0; i < nb_to_read; ++i) {
         int label;
-        if (!(file >> label)) return; // Lire la première valeur rencontrée
-        std::vector<double> features_vec(_nb_features); //  Vecteur capable de stocker 70 doubles.
-        for (int j = 0; j < _nb_features; ++j) {    //  Boucle 70 fois ==> d'après le fichier d'exemple
-            if (!(file >> features_vec[j])) return;  // Lecture des features
+        // On vérifie qu'on arrive bien à lire le label
+        if (!(file >> label)) break;
+
+        std::vector<double> features_vec(_nb_features);
+        for (int j = 0; j < _nb_features; ++j) {
+            file >> features_vec[j];
         }
-        // Création d'un FeatureVector
+
         FeatureVector fv(features_vec);
-        // Création du Sample
-        Sample s(fv, label);   //  Sample = FeatureVector (70 valeurs) + Label(0...9)
+        Sample s(fv, label);
+
+        // add() va incrémenter _nb_samples correctement à chaque ajout
         this->add(s);
     }
 }
 
 void Data::add(const Sample &s) {
+    // Si c'est le tout premier sample, on fixe le nombre de features
+    if (_nb_samples == 0) {
+        _nb_features = s.features().size();
+    }
+    // Sinon, on vérifie que le sample a la bonne taille
+    else if (s.features().size() != _nb_features) {
+        std::cerr << "Erreur : Taille du sample incohérente !" << std::endl;
+        return;
+    }
+
     _data.push_back(s);
-    _nb_samples = _data.size(); // MAJ du nombre de sample
+    _nb_samples = _data.size();
 }
 
 
